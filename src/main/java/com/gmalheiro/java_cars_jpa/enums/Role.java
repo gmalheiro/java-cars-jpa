@@ -1,4 +1,3 @@
 package com.gmalheiro.java_cars_jpa.enums;
 
-public enum Role {
-}
+public enum Role { SELLER, BUYER; }

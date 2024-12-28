@@ -8,5 +8,5 @@ import org.mapstruct.Mapper;
 public interface CarMapper {
     CarDto toDto(Car car);
 
-    Car toEntity(CarDto carDto)
+    Car toEntity(CarDto carDto);
 }

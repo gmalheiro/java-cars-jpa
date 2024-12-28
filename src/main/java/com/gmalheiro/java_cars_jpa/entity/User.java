@@ -25,9 +25,12 @@ public class User {
 
     private String email;
 
-    @OneToMany
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Car> cars = new ArrayList<Car>();
 
-    @OneToMany
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Offer> offers = new ArrayList<Offer>();
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private Address address;
 }

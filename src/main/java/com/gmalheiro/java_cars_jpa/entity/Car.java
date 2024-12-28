@@ -23,4 +23,11 @@ public class Car {
     private int year;
 
     private double price;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "car",cascade = CascadeType.ALL)
+    private Offer offer;
 }

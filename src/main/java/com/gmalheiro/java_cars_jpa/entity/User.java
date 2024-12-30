@@ -4,6 +4,7 @@ import com.gmalheiro.java_cars_jpa.enums.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
 @Data
 @Table(name = "tb_user")
 @AllArgsConstructor
+@NoArgsConstructor
 public class User {
 
     @Id
@@ -21,6 +23,7 @@ public class User {
     private String name;
 
     @Enumerated(value = EnumType.STRING)
+    @Column(name = "role")
     private Role role;
 
     private String email;
@@ -28,6 +31,6 @@ public class User {
     @OneToMany
     private List<Car> cars = new ArrayList<Car>();
 
-    @OneToMany
+    @OneToMany(mappedBy = "user")
     private List<Offer> offers = new ArrayList<Offer>();
 }

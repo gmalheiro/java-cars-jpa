@@ -23,7 +23,6 @@ public class User {
     private String name;
 
     @Enumerated(value = EnumType.STRING)
-    @Column(name = "role")
     private Role role;
 
     private String email;

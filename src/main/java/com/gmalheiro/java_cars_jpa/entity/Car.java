@@ -20,7 +20,7 @@ public class Car {
 
     private String brand;
 
-    private int year;
+    private int carYear;
 
     private double price;
 }

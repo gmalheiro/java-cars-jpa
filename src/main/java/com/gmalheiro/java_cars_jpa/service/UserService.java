@@ -1,7 +1,6 @@
 package com.gmalheiro.java_cars_jpa.service;
 
 import com.gmalheiro.java_cars_jpa.controller.dto.UserDto;
-import com.gmalheiro.java_cars_jpa.entity.User;
 
 import java.util.List;
 

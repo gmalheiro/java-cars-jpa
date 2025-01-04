@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
+@NamedQuery(name = "TbUser.findByUserName", query = "SELECT u FROM User u WHERE u.name=:name")
+@NamedQuery(name = "TbUser.findAllUsers", query = "SELECT u FROM User u")
 @Table(name = "tb_user")
 public class User {
 
@@ -101,6 +103,14 @@ public class User {
 
     public void removeCar(Car car) {
         this.cars.remove(car);
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     @Override

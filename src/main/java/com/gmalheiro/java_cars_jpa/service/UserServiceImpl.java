@@ -16,25 +16,16 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository repository;
 
-    @Autowired
-    private final ModelMapper mapper;
-
-    public UserServiceImpl(ModelMapper mapper) {
-        this.mapper = mapper;
-    }
-
-    private UserDto toDto (User user) {return mapper.map(user,UserDto.class);}
-
-    private User toEntity (UserDto user) {return mapper.map(user,User.class);}
-
     @Override
     public UserDto createUser(UserDto userDto) {
-        return toDto(repository.save(toEntity(userDto)));
+         User user = repository.save(userDto.toEntity(userDto.name(),userDto.role(),userDto.email()));
+        return  new UserDto(user.getName(),user.getRole(),user.getEmail());
     }
 
     @Override
     public UserDto findUserById(Long id) {
-        return toDto(repository.findById(id));
+        User user = repository.findById(id);
+        return new UserDto(user.getName(), user.getRole(),user.getEmail());
     }
 
     @Override
@@ -44,7 +35,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto updateUser(UserDto userDto) {
-        return  toDto(repository.merge(toEntity(userDto)));
+        User user = repository.merge(new User(userDto.name(),userDto.role(),userDto.email()));
+        return  new UserDto(user.getName(),user.getRole(),user.getEmail());
     }
 
     @Override
@@ -52,7 +44,7 @@ public class UserServiceImpl implements UserService {
         List<UserDto> userDtoList  = new ArrayList<>();
 
         repository.findAll().parallelStream().forEach(user -> {
-            userDtoList.add(toDto(user));
+            userDtoList.add(new UserDto(user.getName(),user.getRole(),user.getEmail()));
         });
 
         return userDtoList;

@@ -24,13 +24,13 @@ public class User {
 
     private String email;
 
-    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private List<Car> cars = new ArrayList<Car>();
 
-    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private List<Offer> offers = new ArrayList<Offer>();
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Address address;
 
     public User() {
@@ -40,6 +40,13 @@ public class User {
         this.name = name;
         this.role = role;
         this.email = email;
+    }
+
+    public User(String name, Role role, String email,Address address) {
+        this.name = name;
+        this.role = role;
+        this.email = email;
+        this.address = address;
     }
 
     public User(String name, Role role, String email, List<Car> cars, List<Offer> offers,Address address) {

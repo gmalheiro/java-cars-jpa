@@ -42,6 +42,13 @@ public class User {
         this.email = email;
     }
 
+    public User(String name, Role role, String email,Address address) {
+        this.name = name;
+        this.role = role;
+        this.email = email;
+        this.address = address;
+    }
+
     public User(String name, Role role, String email, List<Car> cars, List<Offer> offers,Address address) {
         this.name = name;
         this.role = role;

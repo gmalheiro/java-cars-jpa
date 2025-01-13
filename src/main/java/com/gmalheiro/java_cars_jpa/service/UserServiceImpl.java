@@ -1,5 +1,6 @@
 package com.gmalheiro.java_cars_jpa.service;
 
+import com.gmalheiro.java_cars_jpa.controller.dto.AddressDto;
 import com.gmalheiro.java_cars_jpa.controller.dto.UserDto;
 import com.gmalheiro.java_cars_jpa.entity.User;
 import com.gmalheiro.java_cars_jpa.repository.user.UserRepository;
@@ -18,14 +19,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto createUser(UserDto userDto) {
-         User user = repository.save(userDto.toEntity(userDto.name(),userDto.role(),userDto.email()));
-        return  new UserDto(user.getName(),user.getRole(),user.getEmail());
+        User user = repository.save(userDto.toEntity(userDto.name(),userDto.role(),userDto.email(),userDto.address()));
+         AddressDto addressDto = new AddressDto(user.getAddress().getStreet(),user.getAddress().getCity(),user.getAddress().getState(),user.getAddress().getZipCode());
+         return  new UserDto(user.getName(),user.getRole(),user.getEmail(),addressDto);
     }
 
     @Override
     public UserDto findUserById(Long id) {
         User user = repository.findById(id);
-        return new UserDto(user.getName(), user.getRole(),user.getEmail());
+        AddressDto addressDto = new AddressDto(user.getAddress().getStreet(),user.getAddress().getCity(),user.getAddress().getState(),user.getAddress().getZipCode());
+        return new UserDto(user.getName(), user.getRole(),user.getEmail(),addressDto);
     }
 
     @Override
@@ -36,7 +39,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto updateUser(UserDto userDto) {
         User user = repository.merge(new User(userDto.name(),userDto.role(),userDto.email()));
-        return  new UserDto(user.getName(),user.getRole(),user.getEmail());
+        AddressDto addressDto = new AddressDto(user.getAddress().getStreet(),user.getAddress().getCity(),user.getAddress().getState(),user.getAddress().getZipCode());
+        return  new UserDto(user.getName(),user.getRole(),user.getEmail(),addressDto);
     }
 
     @Override
@@ -44,7 +48,8 @@ public class UserServiceImpl implements UserService {
         List<UserDto> userDtoList  = new ArrayList<>();
 
         repository.findAll().parallelStream().forEach(user -> {
-            userDtoList.add(new UserDto(user.getName(),user.getRole(),user.getEmail()));
+            AddressDto addressDto = new AddressDto(user.getAddress().getStreet(),user.getAddress().getCity(),user.getAddress().getState(),user.getAddress().getZipCode());
+            userDtoList.add(new UserDto(user.getName(),user.getRole(),user.getEmail(),addressDto));
         });
 
         return userDtoList;

@@ -7,8 +7,9 @@ import jakarta.validation.constraints.NotBlank;
 
 public record UserDto(@NotBlank String name,
                       @NotBlank Role role,
-                      @NotBlank String email) {
-    public User toEntity(String name,Role role, String email) {
-        return new User(name,role,email);
+                      @NotBlank String email,
+                      @NotBlank AddressDto address) {
+    public User toEntity(String name,Role role, String email,AddressDto address) {
+        return new User(name,role,email,address.toEntity());
     }
 }

@@ -31,20 +31,14 @@ public class Car {
     public Car() {
     }
 
-    public Car(String model, String brand, int carYear, double price, User user) {
-        this.model = model;
-        this.brand = brand;
-        this.carYear = carYear;
-        this.price = price;
-        this.user = user;
-    }
-
-    public Car(String model, String brand, int carYear, double price) {
-        this.model = model;
-        this.brand = brand;
-        this.carYear = carYear;
-        this.price = price;
-    }
+   public Car (CarBuilder builder) {
+        this.model = builder.model;
+        this.brand = builder.brand;
+        this.carYear = builder.carYear;
+        this.price = builder.price;
+        this.user = builder.user;
+        this.offers = builder.offers;
+   }
 
     public String getModel() {
         return model;
@@ -96,5 +90,36 @@ public class Car {
                 ", price=" + price +
                 ", user=" + user +
                 '}';
+    }
+
+    public static class CarBuilder {
+        private String model;
+        private String brand;
+        private int carYear;
+        private double price;
+        private User user;
+        private List<Offer> offers = new ArrayList<Offer>();
+
+        public CarBuilder (String model, String brand, int carYear, double price) {
+            this.model = model;
+            this.brand = brand;
+            this.carYear = carYear;
+            this.price = price;
+        }
+
+        public CarBuilder setUser (User user) {
+            this.user = user;
+            return  this;
+        }
+
+        public CarBuilder setOffer (Offer offer) {
+            this.offers.add(offer);
+            return  this;
+        }
+
+        public Car build () {
+            return new Car(this);
+        }
+
     }
 }

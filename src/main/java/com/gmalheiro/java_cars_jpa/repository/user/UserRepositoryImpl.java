@@ -21,8 +21,13 @@ public class UserRepositoryImpl implements UserRepository  {
     private EntityManager em;
 
     @Override
+    @Transactional
     public User save(User entity) {
         if (Objects.isNull(findByName(entity.getName()))) {
+            entity.setAddress(entity.getAddress());
+            entity.getAddress().setUser(entity);
+            entity.setCars(entity.getCars());
+            entity.getCars().forEach(c -> c.setUser(entity));
             em.persist(entity);
             return entity;
         }else{

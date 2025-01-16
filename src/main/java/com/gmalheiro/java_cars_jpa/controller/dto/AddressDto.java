@@ -6,7 +6,7 @@ public record AddressDto(String street,
                          String city,
                          String state,
                          String zipCode) {
-    Address toEntity() {
-        return new Address(street,city,state,zipCode);
+    public Address toEntity(AddressDto dto) {
+        return new Address(dto.street,dto.city,dto.state,dto.zipCode);
     }
 }

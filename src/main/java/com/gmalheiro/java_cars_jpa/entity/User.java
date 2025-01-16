@@ -24,36 +24,25 @@ public class User {
 
     private String email;
 
-    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
+    private Address address;
+
+    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private List<Car> cars = new ArrayList<Car>();
 
     @OneToMany(mappedBy = "user",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private List<Offer> offers = new ArrayList<Offer>();
 
-    @OneToOne(cascade = CascadeType.ALL)
-    private Address address;
-
     public User() {
     }
 
-    public User(String name, Role role, String email) {
-        this.name = name;
-        this.role = role;
-        this.email = email;
-    }
-
-    public User(String name, Role role, String email,Address address) {
-        this.name = name;
-        this.role = role;
-        this.email = email;
-        this.address = address;
-    }
-
-    public User(String name, Role role, String email, List<Car> cars, List<Offer> offers,Address address) {
-        this.name = name;
-        this.role = role;
-        this.email = email;
-        this.address = address;
+    public User (UserBuilder builder) {
+        this.name = builder.name;
+        this.email = builder.email;
+        this.role = builder.role;
+        this.address = builder.address;
+        this.cars = builder.cars;
+        this.offers = builder.offers;
     }
 
     public Long getId() {
@@ -131,4 +120,42 @@ public class User {
                 ", offers=" + offers +
                 '}';
     }
+
+    public static class UserBuilder {
+        private String name;
+        private String email;
+        private Role role;
+        private Address address;
+        private List<Car> cars = new ArrayList<Car>();
+        private List<Offer> offers = new ArrayList<Offer>();
+
+        public UserBuilder (String name, String email, Role role) {
+            this.name = name;
+            this.email = email;
+            this.role = role;
+        }
+        public UserBuilder setCars (List<Car> cars) {
+            this.cars = cars;
+            return  this;
+        }
+        public UserBuilder setCar (Car car) {
+            this.cars.add(car);
+            return  this;
+        }
+
+        public UserBuilder setOffer (Offer offer) {
+            this.offers.add(offer);
+            return  this;
+        }
+
+        public UserBuilder setAddress (Address address) {
+            this.address = address;
+            return this;
+        }
+
+        public User build () {
+            return new User(this);
+        }
+    }
+
 }

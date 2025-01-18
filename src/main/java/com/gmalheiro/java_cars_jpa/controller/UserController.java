@@ -28,4 +28,9 @@ public class UserController {
     public ResponseEntity<List<UserDto>> listUsers () {
         return ResponseEntity.ok(service.findAllUser());
     }
+
+    @PutMapping
+    public ResponseEntity<UserDto> updateUser (@RequestBody UserDto userDto) {
+        return ResponseEntity.ok(service.updateUser(userDto));
+    }
 }
